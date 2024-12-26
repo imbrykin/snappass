@@ -7,7 +7,7 @@ import redis
 from cryptography.fernet import Fernet
 from flask import abort, Flask, render_template, request, jsonify, make_response
 from redis.exceptions import ConnectionError
-from urllib.parse import quote_plus
+from urllib.parse import quote
 from urllib.parse import unquote_plus
 from urllib.parse import urljoin
 from distutils.util import strtobool
@@ -98,6 +98,7 @@ def parse_token(token):
 
     try:
         decryption_key = token_fragments[1].encode('utf-8')
+        decryption_key = decryption_key + b'=' * (-len(decryption_key) % 4)  # Restore '='
     except IndexError:
         decryption_key = None
 
@@ -146,7 +147,7 @@ def set_password(password, ttl):
     storage_key = REDIS_PREFIX + uuid.uuid4().hex
     encrypted_password, encryption_key = encrypt(password)
     redis_client.setex(storage_key, ttl, encrypted_password)
-    encryption_key = encryption_key.decode('utf-8')
+    encryption_key = encryption_key.decode('utf-8').rstrip('=')  # Remove '='
     token = TOKEN_SEPARATOR.join([storage_key, encryption_key])
     return token
 
@@ -229,7 +230,7 @@ def handle_password():
         ttl = TIME_CONVERSION[ttl.lower()]
         token = set_password(password, ttl)
         base_url = set_base_url(request)
-        link = base_url + quote_plus(token)
+        link = base_url + quote(token, safe='~=')  # Prevent '=' from being encoded
         if request.accept_mimetypes.accept_json and not \
            request.accept_mimetypes.accept_html:
             return jsonify(link=link, ttl=ttl)
@@ -246,7 +247,7 @@ def api_handle_password():
     if password and isinstance(ttl, int) and ttl <= MAX_TTL:
         token = set_password(password, ttl)
         base_url = set_base_url(request)
-        link = base_url + quote_plus(token)
+        link = base_url + quote(token, safe='~=')
         return jsonify(link=link, ttl=ttl)
     else:
         abort(500)
@@ -281,7 +282,7 @@ def api_v2_set_password():
         )
 
     token = set_password(password, ttl)
-    url_token = quote_plus(token)
+    url_token = quote(token, safe='~=')
     base_url = set_base_url(request)
     api_link = urljoin(base_url, request.path + "/" + url_token)
     web_link = urljoin(base_url, url_token)
