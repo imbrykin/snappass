@@ -367,8 +367,8 @@ def health_check():
 
 @app.errorhandler(Exception)
 def handle_exception(e):
-    logging.info(f"Error occurred: {str(e)}")
-    return "Internal Server Error", 500
+    logging.info(f"Error occurred: Please check that the link is correct.{str(e)}")
+    return "Internal Server Error. Please check that the link is correct and has not been modified during transmission.", 500
 
 
 @check_redis_alive
