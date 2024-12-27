@@ -219,7 +219,6 @@ def set_base_url(req):
 
 @app.route('/', methods=['GET'])
 def index():
-    logging.debug("Processing index route")
     return render_template('set_password.html')
 
 
@@ -301,28 +300,12 @@ def api_v2_set_password():
     return jsonify(response_content)
 
 
-# Setting for Loglevel
-log_level = os.environ.get('LOG_LEVEL', 'INFO').upper()
 logging.basicConfig(
     filename='/var/log/snappass.log',
-    level=getattr(logging, log_level, logging.INFO),
+    level=logging.INFO,
     format='%(asctime)s [%(levelname)s] %(message)s'
 )
-logging.debug(f"Starting Snappass with log level: {log_level}")
-
-logging.getLogger('werkzeug').setLevel(logging.DEBUG)
-
-@app.before_request
-def log_request_info():
-    logging.debug(f"Request: {request.method} {request.url}")
-    logging.debug(f"Headers: {dict(request.headers)}")
-    logging.debug(f"Body: {request.get_data()}")
-
-@app.after_request
-def log_response_info(response):
-    logging.debug(f"Response status: {response.status}")
-    logging.debug(f"Response data: {response.get_data()}")
-    return response
+logging.info("Starting Snappass")
 
 @app.route('/api/v2/passwords/<token>', methods=['HEAD'])
 def api_v2_check_password(token):
