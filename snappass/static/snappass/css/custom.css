@@ -14,13 +14,13 @@
     align-self: flex-start;
     margin-left: 10px;
     margin-top: 0px;
-    background-color: #0056b3; /* Синий цвет */
+    background-color: #337ab7; /* Синий цвет */
     color: #fff; /* Белый текст */
     border: none;
 }
 
 .button-submit:hover {
-    background-color: #024a97; /* Более темный синий при наведении */
+    background-color: #1d629e; /* Более темный синий при наведении */
 }
 
 /* Кнопка "Generate Password" */
@@ -84,7 +84,7 @@
 }
 
 .page-header h1 {
-    font-size: 32px;
+    font-size: 36px;
     color: #333;
     text-align: left;
     margin-bottom: 5px;
@@ -123,13 +123,13 @@
 
 /* Состояние при наведении */
 .expire-time-select:hover {
-    border-color: #007bff; /* Синий цвет рамки */
+    border-color: #337ab7; /* Синий цвет рамки */
     box-shadow: 0px 2px 5px rgba(0, 123, 255, 0.2); /* Тень */
 }
 
 /* Состояние фокуса */
 .expire-time-select:focus {
     outline: none; /* Убираем стандартное выделение */
-    border-color: #0056b3; /* Темный синий */
-    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.5); /* Подсвечивание */
+    border-color: #337ab7; /* Темный синий */
+    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.2); /* Подсвечивание */
 }
