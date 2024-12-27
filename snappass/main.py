@@ -3,6 +3,8 @@ import sys
 import uuid
 import logging
 import redis
+import random
+import string
 
 from cryptography.fernet import Fernet
 from flask import abort, Flask, render_template, request, jsonify, make_response
@@ -216,6 +218,10 @@ def set_base_url(req):
         base_url = base_url + URL_PREFIX.strip("/") + "/"
     return base_url
 
+def gen_random_string(length=32):
+    rnd = random.SystemRandom()
+    pwd_chars = string.ascii_letters + string.digits + "!@$%^&*()-_+=|:."  
+    return ''.join(rnd.choice(pwd_chars) for _ in range(length))
 
 @app.before_request
 def log_request_info():
@@ -224,7 +230,9 @@ def log_request_info():
 
 @app.route('/', methods=['GET'])
 def index():
-    return render_template('set_password.html')
+    random_password = gen_random_string()
+    #return render_template('set_password.html')
+    return render_template('set_password.html', random_password=random_password)
 
 
 @app.route('/', methods=['POST'])
