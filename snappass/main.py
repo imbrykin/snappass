@@ -217,6 +217,11 @@ def set_base_url(req):
     return base_url
 
 
+@app.before_request
+def log_request_info():
+    logging.info(f"Processing request: {request.method} {request.url}")
+
+
 @app.route('/', methods=['GET'])
 def index():
     return render_template('set_password.html')
@@ -358,6 +363,12 @@ def show_password(password_key):
 @check_redis_alive
 def health_check():
     return {}
+
+
+@app.errorhandler(Exception)
+def handle_exception(e):
+    logging.info(f"Error occurred: {str(e)}")
+    return "Internal Server Error", 500
 
 
 @check_redis_alive
