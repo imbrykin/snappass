@@ -218,7 +218,7 @@ def set_base_url(req):
         base_url = base_url + URL_PREFIX.strip("/") + "/"
     return base_url
 
-def gen_random_string(length=32):
+def gen_random_string(length=24):
     rnd = random.SystemRandom()
     pwd_chars = string.ascii_letters + string.digits + "!@$%^&*()-_+=|:."  
     return ''.join(rnd.choice(pwd_chars) for _ in range(length))
@@ -371,6 +371,17 @@ def show_password(password_key):
 @check_redis_alive
 def health_check():
     return {}
+
+
+@app.route('/generate-password', methods=['POST'])
+def generate_password():
+    data = request.json
+    length = int(data.get('length', 24))
+    if length < 1 or length > 128:
+        return jsonify({"error": "Invalid length."}), 400
+    charset = string.ascii_letters + string.digits + "!@$%^&*()-_+=|:."
+    password = ''.join(random.choices(charset, k=length))
+    return jsonify({"password": password})
 
 
 @app.errorhandler(Exception)

@@ -1,17 +1,134 @@
-html {
-    position: relative;
-    min-height: 100%;
+/* Общие классы для кнопок */
+.button {
+    width: 110px; /* Базовая ширина */
+    padding: 10px; /* Внутренние отступы */
+    border-radius: 5px; /* Скругленные углы */
+    text-align: center; /* Центрирование текста */
+    cursor: pointer; /* Иконка курсора при наведении */
 }
 
-.break-word {
-    word-wrap: break-word;
+/* Кнопка "Submit" */
+.button-submit {
+    width: 130px;
+    align-self: flex-start;
+    margin-left: 10px;
+    margin-top: 0px;
+    background-color: #0056b3; /* Синий цвет */
+    color: #fff; /* Белый текст */
+    border: none;
 }
 
-.margin-bottom-10 {
-    margin-bottom: 10px;
+.button-submit:hover {
+    background-color: #024a97; /* Более темный синий при наведении */
 }
 
-input[readonly].readonly-text {
-    background-color: #fff;
-    cursor: text;
+/* Кнопка "Generate Password" */
+.button-generate {
+    width: 150px;
+    align-self: flex-end;
+    background-color: #6c757d; /* Серый цвет */
+    color: #fff;
+    border: none;
+}
+
+.button-generate:hover {
+    background-color: #5a6268; /* Темнее при наведении */
+}
+
+/* Поле для ввода пароля */
+.textarea-password {
+    flex-grow: 0;
+    width: 50%;
+    resize: none;
+    min-width: 300px;
+    border: 1px solid #ccc;
+    margin-left: 0px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Выпадающий список */
+.select-ttl {
+    width: auto;
+    min-width: 100px;
+    margin-top: 0px;
+    padding: 1px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Поле ввода длины пароля */
+.input-length {
+    margin-top: 0px;
+    width: 70px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Макеты строк */
+.row-flex {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.column-flex {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    margin-top: 0px;
+}
+
+.page-header h1 {
+    font-size: 32px;
+    color: #333;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.expire-time-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Выравнивание по левому краю */
+    gap: 8px; /* Расстояние между меткой и списком */
+    margin-top: -93px; /* Отступ сверху */
+    padding: 10px; /* Внутренние отступы */
+    background-color: #f9f9f9; /* Светлый фон */
+    border: 1px solid #ddd; /* Рамка контейнера */
+    border-radius: 5px; /* Скругленные углы */
+}
+
+.expire-time-label {
+    font-size: 14px; /* Размер текста */
+    font-weight: bold; /* Жирный текст */
+    color: #555; /* Цвет текста */
+    margin-bottom: 5px; /* Отступ под меткой */
+}
+
+.expire-time-select {
+    width: 100px; /* Фиксированная ширина */
+    min-width: 130px; /* Минимальная ширина */
+    padding: 8px; /* Внутренние отступы */
+    font-size: 14px; /* Размер текста */
+    color: #333; /* Цвет текста */
+    background-color: #fff; /* Белый фон */
+    border: 1px solid #ccc; /* Рамка */
+    border-radius: 5px; /* Скругленные углы */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Плавный эффект */
+}
+
+/* Состояние при наведении */
+.expire-time-select:hover {
+    border-color: #007bff; /* Синий цвет рамки */
+    box-shadow: 0px 2px 5px rgba(0, 123, 255, 0.2); /* Тень */
+}
+
+/* Состояние фокуса */
+.expire-time-select:focus {
+    outline: none; /* Убираем стандартное выделение */
+    border-color: #0056b3; /* Темный синий */
+    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.5); /* Подсвечивание */
 }
