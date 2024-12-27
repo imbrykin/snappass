@@ -1,7 +1,7 @@
 import os
 import sys
 import uuid
-
+import logging
 import redis
 
 from cryptography.fernet import Fernet
@@ -299,6 +299,13 @@ def api_v2_set_password():
     }
     return jsonify(response_content)
 
+
+logging.basicConfig(
+    filename='/var/log/snappass.log',
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s'
+)
+logging.info("Starting Snappass")
 
 @app.route('/api/v2/passwords/<token>', methods=['HEAD'])
 def api_v2_check_password(token):
