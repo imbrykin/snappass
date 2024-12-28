@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             let charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
             if (specialSymbolsCheckbox && specialSymbolsCheckbox.checked) {
-                charset += '!@$%^&*()-_+=|:.';
+                charset += '{}[]<>!@$%^&*()-_+=:.';
             }
 
             let password = '';
