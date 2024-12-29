@@ -11,7 +11,7 @@
 .button-submit {
     width: 130px;
     align-self: flex-start;
-    margin-left: 10px;
+    margin-left: 0px;
     margin-top: 0px;
     background-color: #337ab7; /* Синий цвет */
     color: #fff; /* Белый текст */
@@ -37,15 +37,14 @@
     background-color: #5a6268; /* Темнее при наведении */
 }
 
-/* Поле для ввода пароля */
+/* Поле для ввода пароля (textarea) */
+
 .textarea-password {
-    flex-grow: 0;
-    width: 55%;
-    resize: none;
-    min-width: 300px;
+    resize: both; /* Разрешаем изменение размера */
+    min-height: 250px; /* Минимальная высота */
+    width: 660px; /* Полная ширина колонки */
+    max-width: 100%; /* Запрещаем превышать контейнер */
     border: 1px solid #ccc;
-    margin-left: 0px;
-    padding: 10px;
     border-radius: 5px;
 }
 
@@ -71,36 +70,30 @@
 /* Макеты строк */
 .row-flex {
     display: flex;
-    align-items: center;
-    gap: 10px; /* Отступ между полем и кнопкой */
-    margin-bottom: 15px;
+    align-items: flex-start; /* Выравнивание по верхнему краю */
+    gap: 20px; /* Расстояние между textarea и кнопками */
 }
 
 .column-flex {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-    margin-top: 0px;
+    align-items: stretch; /* Выравнивание по ширине */
+    gap: 10px; /* Расстояние между элементами в колонке */
 }
 
 .page-header h1 {
     font-size: 36px;
     color: #333;
-    text-align: left;
+    text-align: row;
     margin-bottom: 5px;
 }
 
+/* Контейнер для Expire Time */
 .expire-time-container {
+
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Выравнивание по левому краю */
-    gap: 8px; /* Расстояние между меткой и списком */
-    margin-top: -93px; /* Отступ сверху */
-    padding: 10px; /* Внутренние отступы */
-    background-color: #f9f9f9; /* Светлый фон */
-    border: 1px solid #ddd; /* Рамка контейнера */
-    border-radius: 5px; /* Скругленные углы */
+    gap: 50px; /* Расстояние между меткой и списком */
 }
 
 .expire-time-label {
@@ -139,10 +132,9 @@
 .checkbox-wrapper {
     display: flex;
     flex-direction: row; /* Расположить элементы вертикально */
-    align-items: center; /* Выравнивание по левому краю */
+    align-items: row; /* Выравнивание по левому краю */
     gap: 5px; /* Расстояние между меткой и чекбоксом */
-    margin-top: -10px; /* Отступ сверху */
-    margin-bottom: -10px; /* Отступ снизу */
+    margin-top: 25px; /* Отступ сверху */
 }
 
 /* Жирный текст метки */
@@ -163,7 +155,7 @@
     flex-direction: row; /* Расположить элементы вертикально */
     align-items: flex; /* Выравнивание по левому краю */
     margin-top: 5px; /* Отступ сверху */
-    margin-bottom: 0; /* Отступ снизу */
+    margin-bottom: 70px; /* Отступ снизу */
 }
 
 /* Стиль для формы выбора специальных символов */
