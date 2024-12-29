@@ -40,7 +40,7 @@
 /* Поле для ввода пароля */
 .textarea-password {
     flex-grow: 0;
-    width: 50%;
+    width: 55%;
     resize: none;
     min-width: 300px;
     border: 1px solid #ccc;
@@ -177,8 +177,7 @@
 }
 
 .special-symbols-form input {
-    width: 100%;
-    max-width: 300px;
+    width: 242px;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
