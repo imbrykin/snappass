@@ -1,7 +1,7 @@
 /* Общие классы для кнопок */
 .button {
     width: 110px; /* Базовая ширина */
-    padding: 10px; /* Внутренние отступы */
+    padding: 6px; /* Внутренние отступы */
     border-radius: 5px; /* Скругленные углы */
     text-align: center; /* Центрирование текста */
     cursor: pointer; /* Иконка курсора при наведении */
@@ -9,7 +9,7 @@
 
 /* Кнопка "Submit" */
 .button-submit {
-    width: 130px;
+    width: 100px;
     align-self: flex-start;
     margin-left: 0px;
     margin-top: 0px;
@@ -24,13 +24,13 @@
 
 /* Кнопка "Generate Password" */
 .button-generate {
-    width: 150px;
+    width: 170px;
     align-self: center;
     background-color: #6c757d; /* Серый цвет */
     color: #fff;
     border: none;
-    margin-left: 0px;
-    margin-top: 20px;
+    margin-right: -5px;
+    margin-top: 25px;
 }
 
 .button-generate:hover {
@@ -38,16 +38,21 @@
 }
 
 /* Поле для ввода пароля (textarea) */
-
 .textarea-password {
     resize: both; /* Разрешаем изменение размера */
     min-height: 250px; /* Минимальная высота */
     width: 542px; /* Полная ширина колонки */
     max-width: 100%; /* Запрещаем превышать контейнер */
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: 1px solid #ccc; /* Базовый цвет рамки */
+    border-radius: 5px; /* Скругленные углы */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Плавный эффект при фокусе */
 }
 
+.textarea-password:focus {
+    outline: none; /* Убираем стандартное выделение */
+    border-color: #337ab7; /* Темный синий */
+    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.2); /* Подсвечивание рамки */
+}
 /* Выпадающий список */
 .select-ttl {
     width: auto;
@@ -71,7 +76,7 @@
 .row-flex {
     display: flex;
     align-items: flex-start; /* Выравнивание по верхнему краю */
-    gap: 20px; /* Расстояние между textarea и кнопками */
+    gap: 10px; /* Расстояние между textarea и кнопками */
 }
 
 .column-flex {
@@ -100,7 +105,7 @@
     font-weight: bold; /* Жирный текст */
     color: #555; /* Цвет текста */
     margin-bottom: 0px; /* Отступ под меткой */
-    margin-right: 175px;
+    margin-right: 675px;
     white-space: nowrap;
 }
 
@@ -134,19 +139,22 @@
     display: flex;
     flex-direction: row; /* Расположить элементы вертикально */
     align-items: row; /* Выравнивание по левому краю */
-    gap: 5px; /* Расстояние между меткой и чекбоксом */
-    margin-top: 25px; /* Отступ сверху */
+    gap: 10px; /* Расстояние между меткой и чекбоксом */
+    margin-top: 27px; /* Отступ сверху */
+    margin-left: 6px;
 }
 
 /* Жирный текст метки */
 .bold-label {
+    margin-top: 1px;
     font-size: 14px; /* Размер текста */
     font-weight: bold; /* Жирный текст */
 }
 
 /* Стиль самого чекбокса */
 .checkbox {
-    width: 20px;
+    margin-top: 5px;
+    width: 25px;
     height: 20px;
     cursor: pointer; /* Указатель при наведении */
 }
@@ -161,16 +169,16 @@
 
 /* Стиль для формы выбора специальных символов */
 .special-symbols-form {
-    margin-top: 0;
-    margin-bottom: 15px;
+    margin-top: -2px;
+    margin-bottom: 12px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 5px;
+    gap: 2px;
 }
 
 .special-symbols-form input {
-    width: 242px;
+    width: 247px;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
