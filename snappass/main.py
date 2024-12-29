@@ -157,21 +157,29 @@ def set_password(password, ttl):
 @check_redis_alive
 def get_password(token):
     """
-    From a given token, return the initial password.
+    From a given token, return the decrypted password.
 
-    If the token is tilde-separated, we decrypt the password fetched from Redis.
-    If not, the password is simply returned as is.
+    If the token is invalid or decryption fails, the key is not deleted.
     """
     storage_key, decryption_key = parse_token(token)
-    password = redis_client.get(storage_key)
-    redis_client.delete(storage_key)
 
-    if password is not None:
+    encrypted_password = redis_client.get(storage_key)
 
-        if decryption_key is not None:
-            password = decrypt(password, decryption_key)
+    if encrypted_password is None:
+        logging.warning(f"Password for token {token} not found in Redis.")
+        return None
 
-        return password.decode('utf-8')
+    if decryption_key is not None:
+        try:
+            decrypted_password = decrypt(encrypted_password, decryption_key)
+            redis_client.delete(storage_key)
+            return decrypted_password.decode('utf-8')
+        except Exception as e:
+            logging.error(f"Decryption failed for token {token}: {str(e)}")
+            return None
+
+    redis_client.delete(storage_key) 
+    return encrypted_password.decode('utf-8')
 
 
 @check_redis_alive
