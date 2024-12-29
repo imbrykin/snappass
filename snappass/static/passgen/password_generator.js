@@ -41,6 +41,9 @@ document.addEventListener('DOMContentLoaded', function () {
         charCounter.textContent = remaining >= 0 ? remaining : 0; // Обновляем счётчик
     }
 
+    // Разрешить изменение размера текстового поля
+    passwordField.style.resize = 'both';
+
     // Обновляем счётчик при вводе
     passwordField.addEventListener('input', updateCharCounter);
 
