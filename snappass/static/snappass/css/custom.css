@@ -183,3 +183,7 @@
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+
+#password-text {
+    resize: none; /* Запрет изменения размера */
+}
