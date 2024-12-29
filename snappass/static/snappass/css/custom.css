@@ -9,7 +9,8 @@
 
 /* Кнопка "Submit" */
 .button-submit {
-    width: 100px;
+    width: 115px;
+    height: 50px;
     align-self: flex-start;
     margin-left: 0px;
     margin-top: 0px;
@@ -110,7 +111,7 @@
 }
 
 .expire-time-select {
-    width: 100px; /* Фиксированная ширина */
+    width: 115px; /* Фиксированная ширина */
     min-width: 100px; /* Минимальная ширина */
     padding: 8px; /* Внутренние отступы */
     font-size: 14px; /* Размер текста */
@@ -119,19 +120,6 @@
     border: 1px solid #ccc; /* Рамка */
     border-radius: 5px; /* Скругленные углы */
     transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Плавный эффект */
-}
-
-/* Состояние при наведении */
-.expire-time-select:hover {
-    border-color: #337ab7; /* Синий цвет рамки */
-    box-shadow: 0px 2px 5px rgba(0, 123, 255, 0.2); /* Тень */
-}
-
-/* Состояние фокуса */
-.expire-time-select:focus {
-    outline: none; /* Убираем стандартное выделение */
-    border-color: #337ab7; /* Темный синий */
-    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.2); /* Подсвечивание */
 }
 
 /* Контейнер для чекбокса и метки */
