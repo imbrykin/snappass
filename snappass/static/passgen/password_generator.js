@@ -13,7 +13,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const defaultSpecialSymbols = '!@$%^&*_-#()=+[]{}<>;:,.?';
 
     // Установить начальное значение для поля customSymbolsInput
-    customSymbolsInput.value = defaultSpecialSymbols;
+    if (!customSymbolsInput.value.trim()) {
+        customSymbolsInput.value = defaultSpecialSymbols;
+    }
 
     // Скрыть/показать форму ввода специальных символов при переключении чекбокса
     specialSymbolsCheckbox.addEventListener('change', function () {
@@ -57,9 +59,15 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         let charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
         if (specialSymbolsCheckbox.checked) {
-            const customSymbols = customSymbolsInput.value || allowedSpecialSymbols;
-            charset += customSymbols;
+            const customSymbols = customSymbolsInput.value.trim();
+
+            if (customSymbols) {
+                // Добавляем только указанные пользователем символы
+                charset += customSymbols;
+            }
+            // Если поле пустое, просто используем базовый набор (ничего не добавляем)
         }
 
         let password = '';
