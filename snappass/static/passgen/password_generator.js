@@ -35,27 +35,14 @@ document.addEventListener('DOMContentLoaded', function () {
         customSymbolsInput.value = uniqueSymbols;
     });
 
-    // Предупреждение при превышении лимита символов
-    passwordField.addEventListener('input', function () {
+    // Обновление счётчика символов
+    function updateCharCounter() {
         const remaining = maxLength - passwordField.value.length; // Сколько символов осталось
         charCounter.textContent = remaining >= 0 ? remaining : 0; // Обновляем счётчик
-        let warningMessage = document.getElementById(warningMessageId);
+    }
 
-        if (!warningMessage) {
-            warningMessage = document.createElement('p');
-            warningMessage.id = warningMessageId;
-            warningMessage.style.color = 'red';
-            warningMessage.textContent = 'Password cannot exceed 4096 characters.';
-            passwordField.parentNode.appendChild(warningMessage);
-        }
-
-        if (passwordField.value.length > maxLength) {
-            passwordField.value = passwordField.value.slice(0, maxLength); // Обрезаем текст
-            warningMessage.style.display = 'block'; // Показываем предупреждение
-        } else {
-            warningMessage.style.display = 'none'; // Скрываем предупреждение
-        }
-    });
+    // Обновляем счётчик при вводе
+    passwordField.addEventListener('input', updateCharCounter);
 
     generatePasswordButton.addEventListener('click', function () {
         const lengthField = document.getElementById('password_length');
@@ -79,5 +66,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         passwordField.value = password;
+        updateCharCounter(); // Обновляем счётчик символов после генерации
     });
 });
