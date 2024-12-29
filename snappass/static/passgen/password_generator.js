@@ -1,8 +1,19 @@
 document.addEventListener('DOMContentLoaded', function () {
+    const charCounter = document.getElementById('remaining'); // Элемент счётчика
     const generatePasswordButton = document.getElementById('generate_password');
     const specialSymbolsCheckbox = document.getElementById('special_symbols');
     const customSymbolsInput = document.getElementById('custom_symbols');
     const specialSymbolsContainer = document.getElementById('special_symbols_container');
+    const passwordField = document.getElementById('password'); // Поле для пароля
+    const maxLength = 4096; // Максимальная длина пароля
+    const warningMessageId = 'password_warning'; // ID сообщения предупреждения
+
+    // Список всех допустимых символов
+    const allowedSpecialSymbols = '!@#$%^&*()-_=+[]{}<>;:,.?/|\\`\'"~';
+    const defaultSpecialSymbols = '!@$%^&*_-#()=+[]{}<>;:,.?';
+
+    // Установить начальное значение для поля customSymbolsInput
+    customSymbolsInput.value = defaultSpecialSymbols;
 
     // Скрыть/показать форму ввода специальных символов при переключении чекбокса
     specialSymbolsCheckbox.addEventListener('change', function () {
@@ -13,25 +24,51 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Удалить дубликаты из поля custom_symbols
+    // Фильтр допустимых символов
     customSymbolsInput.addEventListener('input', function () {
-        const uniqueSymbols = [...new Set(customSymbolsInput.value.split(''))].join('');
+        // Удалить недопустимые символы
+        const filteredSymbols = customSymbolsInput.value
+            .split('')
+            .filter(char => allowedSpecialSymbols.includes(char));
+        // Удалить дубликаты
+        const uniqueSymbols = [...new Set(filteredSymbols)].join('');
         customSymbolsInput.value = uniqueSymbols;
+    });
+
+    // Предупреждение при превышении лимита символов
+    passwordField.addEventListener('input', function () {
+        const remaining = maxLength - passwordField.value.length; // Сколько символов осталось
+        charCounter.textContent = remaining >= 0 ? remaining : 0; // Обновляем счётчик
+        let warningMessage = document.getElementById(warningMessageId);
+
+        if (!warningMessage) {
+            warningMessage = document.createElement('p');
+            warningMessage.id = warningMessageId;
+            warningMessage.style.color = 'red';
+            warningMessage.textContent = 'Password cannot exceed 4096 characters.';
+            passwordField.parentNode.appendChild(warningMessage);
+        }
+
+        if (passwordField.value.length > maxLength) {
+            passwordField.value = passwordField.value.slice(0, maxLength); // Обрезаем текст
+            warningMessage.style.display = 'block'; // Показываем предупреждение
+        } else {
+            warningMessage.style.display = 'none'; // Скрываем предупреждение
+        }
     });
 
     generatePasswordButton.addEventListener('click', function () {
         const lengthField = document.getElementById('password_length');
-        const passwordField = document.getElementById('password');
 
         const length = parseInt(lengthField.value) || 24;
-        if (length < 1 || length > 128) {
-            alert('Password length must be between 1 and 128.');
+        if (length < 1 || length > 512) {
+            alert('Password length must be between 1 and 512.');
             return;
         }
 
         let charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         if (specialSymbolsCheckbox.checked) {
-            const customSymbols = customSymbolsInput.value || '!@$%^&*()-_+=|:.';
+            const customSymbols = customSymbolsInput.value || allowedSpecialSymbols;
             charset += customSymbols;
         }
 
