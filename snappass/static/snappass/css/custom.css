@@ -42,7 +42,7 @@
 .textarea-password {
     resize: both; /* Разрешаем изменение размера */
     min-height: 250px; /* Минимальная высота */
-    width: 660px; /* Полная ширина колонки */
+    width: 542px; /* Полная ширина колонки */
     max-width: 100%; /* Запрещаем превышать контейнер */
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -90,7 +90,6 @@
 
 /* Контейнер для Expire Time */
 .expire-time-container {
-
     display: flex;
     flex-direction: column;
     gap: 50px; /* Расстояние между меткой и списком */
@@ -100,12 +99,14 @@
     font-size: 14px; /* Размер текста */
     font-weight: bold; /* Жирный текст */
     color: #555; /* Цвет текста */
-    margin-bottom: 5px; /* Отступ под меткой */
+    margin-bottom: 0px; /* Отступ под меткой */
+    margin-right: 175px;
+    white-space: nowrap;
 }
 
 .expire-time-select {
     width: 100px; /* Фиксированная ширина */
-    min-width: 130px; /* Минимальная ширина */
+    min-width: 100px; /* Минимальная ширина */
     padding: 8px; /* Внутренние отступы */
     font-size: 14px; /* Размер текста */
     color: #333; /* Цвет текста */
