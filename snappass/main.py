@@ -384,8 +384,8 @@ def health_check():
 @app.route('/generate-password', methods=['POST'])
 def generate_password():
     data = request.json
-    length = int(data.get('length', 24))
-    if length < 1 or length > 512:
+    length = int(data.get('length', 32))
+    if length < 1 or length > 64:
         return jsonify({"error": "Invalid length."}), 400
     charset = string.ascii_letters + string.digits + "!@$%^&*_-#()=+[]{}<>;:,.?"
     password = ''.join(random.choices(charset, k=length))

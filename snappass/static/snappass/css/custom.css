@@ -141,7 +141,8 @@
 
 /* Стиль самого чекбокса */
 .checkbox {
-    margin-top: 5px;
+    margin-top: 0;
+    gap: 0;
     width: 25px;
     height: 20px;
     cursor: pointer; /* Указатель при наведении */
@@ -151,18 +152,18 @@
     display: flex;
     flex-direction: row; /* Расположить элементы вертикально */
     align-items: flex; /* Выравнивание по левому краю */
-    margin-top: 5px; /* Отступ сверху */
-    margin-bottom: 70px; /* Отступ снизу */
+    margin-top: 0; /* Отступ сверху */
+    margin-bottom: 0; /* Отступ снизу */
 }
 
 /* Стиль для формы выбора специальных символов */
 .special-symbols-form {
-    margin-top: -2px;
-    margin-bottom: 12px;
+    margin-top: 0;
+    margin-bottom: 0;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 2px;
+    gap: 0;
 }
 
 .special-symbols-form input {
@@ -172,6 +173,78 @@
     border-radius: 5px;
 }
 
+#special_symbols_container {
+    height: auto; /* Высота остаётся неизменной */
+    margin-top: 0; /* Отступ сверху */
+    transition: visibility 0.3s ease; /* Плавное скрытие */
+}
+
+#special_symbols_container.visible {
+    visibility: visible; /* Показываем содержимое */
+}
+
 #password-text {
     resize: none; /* Запрет изменения размера */
+}
+
+.slider {
+    width: 300px; /* Установите желаемую ширину */
+    height: 8px; /* Высота полосы слайдера */
+    background: #ddd; /* Цвет полосы */
+    border-radius: 4px; /* Скругление углов полосы */
+    outline: none; /* Убираем рамку при фокусе */
+    transition: background 0.3s ease; /* Плавный переход цвета при наведении */
+    margin: 0 auto; /* Центрирование слайдера */
+}
+
+.slider:hover {
+    background: #bbb; /* Цвет полосы при наведении */
+}
+
+
+.slider::-webkit-slider-thumb:hover {
+    background: #1d629e; /* Цвет ползунка при наведении */
+}
+
+.slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #337ab7;
+    cursor: pointer;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease;
+}
+
+.slider::-moz-range-thumb:hover {
+    background: #1d629e;
+}
+
+.slider::-ms-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #337ab7;
+    cursor: pointer;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease;
+}
+
+.slider::-ms-thumb:hover {
+    background: #1d629e;
+}
+
+.slider-container .slider {
+    width: 250px; /* Ограничьте ширину */
+    height: 14px; /* Высота полосы слайдера */
+    margin-left: 0;
+    margin-top: 5px;
+}
+#slider {
+    flex-shrink: 0; /* Запретить изменение размера */
+    height: 70px;
+    margin-bottom: 500px;
+         /* Фиксированная высота контейнера */
+    display: block; /* Убедиться, что Flexbox используется */
+    align-items: center; /* Центрирование слайдера по вертикали */
 }

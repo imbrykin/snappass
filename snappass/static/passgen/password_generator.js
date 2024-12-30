@@ -1,73 +1,71 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const charCounter = document.getElementById('remaining'); // Элемент счётчика
+    const charCounter = document.getElementById('remaining');
     const generatePasswordButton = document.getElementById('generate_password');
     const specialSymbolsCheckbox = document.getElementById('special_symbols');
     const customSymbolsInput = document.getElementById('custom_symbols');
     const specialSymbolsContainer = document.getElementById('special_symbols_container');
-    const passwordField = document.getElementById('password'); // Поле для пароля
-    const maxLength = 4096; // Максимальная длина пароля
-    const warningMessageId = 'password_warning'; // ID сообщения предупреждения
+    const passwordField = document.getElementById('password');
+    const passwordLengthInput = document.getElementById('password_length');
+    const passwordSlider = document.getElementById('password_slider');
 
-    // Список всех допустимых символов
+    const maxLength = 4096;
     const allowedSpecialSymbols = '!@#$%^&*()-_=+[]{}<>;:,.?/|\\`\'"~';
     const defaultSpecialSymbols = '!@$%^&*_-#()=+[]{}<>;:,.?';
+    const presetSteps = [8, 16, 24, 32, 40, 48, 56, 64];
 
-    // Установить начальное значение для поля customSymbolsInput
-    if (!customSymbolsInput.value.trim()) {
-        customSymbolsInput.value = defaultSpecialSymbols;
+    function updateCharCounter() {
+        const remaining = maxLength - passwordField.value.length;
+        charCounter.textContent = Math.max(remaining, 0);
     }
 
-    // Скрыть/показать форму ввода специальных символов при переключении чекбокса
-    specialSymbolsCheckbox.addEventListener('change', function () {
-        if (specialSymbolsCheckbox.checked) {
-            specialSymbolsContainer.style.display = 'block';
-        } else {
-            specialSymbolsContainer.style.display = 'none';
-        }
-    });
+    function syncSliderAndInput(value) {
+        const sanitizedValue = Math.min(Math.max(value, 1), 64); // Ensure within range
+        const closestStep = presetSteps.reduce((prev, curr) =>
+            Math.abs(curr - sanitizedValue) < Math.abs(prev - sanitizedValue) ? curr : prev
+        );
+        passwordLengthInput.value = sanitizedValue;
+        passwordSlider.value = closestStep;
+    }
 
-    // Фильтр допустимых символов
-    customSymbolsInput.addEventListener('input', function () {
-        // Удалить недопустимые символы
+    function sanitizeCustomSymbols() {
         const filteredSymbols = customSymbolsInput.value
             .split('')
             .filter(char => allowedSpecialSymbols.includes(char));
-        // Удалить дубликаты
-        const uniqueSymbols = [...new Set(filteredSymbols)].join('');
-        customSymbolsInput.value = uniqueSymbols;
-    });
-
-    // Обновление счётчика символов
-    function updateCharCounter() {
-        const remaining = maxLength - passwordField.value.length; // Сколько символов осталось
-        charCounter.textContent = remaining >= 0 ? remaining : 0; // Обновляем счётчик
+        customSymbolsInput.value = [...new Set(filteredSymbols)].join('');
     }
 
-    // Разрешить изменение размера текстового поля
-    passwordField.style.resize = 'both';
+    specialSymbolsCheckbox.addEventListener('change', function () {
+        specialSymbolsContainer.style.display = specialSymbolsCheckbox.checked ? 'block' : 'none';
+    });
 
-    // Обновляем счётчик при вводе
+    customSymbolsInput.addEventListener('input', sanitizeCustomSymbols);
+
     passwordField.addEventListener('input', updateCharCounter);
 
-    generatePasswordButton.addEventListener('click', function () {
-        const lengthField = document.getElementById('password_length');
+    passwordLengthInput.addEventListener('input', function () {
+        const value = parseInt(this.value, 10) || 1;
+        syncSliderAndInput(value);
+    });
 
-        const length = parseInt(lengthField.value) || 24;
-        if (length < 1 || length > 512) {
-            alert('Password length must be between 1 and 512.');
+    passwordSlider.addEventListener('input', function () {
+        const value = parseInt(this.value, 10);
+        const closestStep = presetSteps.reduce((prev, curr) =>
+            Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev
+        );
+        passwordSlider.value = closestStep;
+        passwordLengthInput.value = closestStep;
+    });
+
+    generatePasswordButton.addEventListener('click', function () {
+        const length = parseInt(passwordLengthInput.value, 10) || 8;
+        if (length < 1 || length > 64) {
+            alert('Password length must be between 1 and 64.');
             return;
         }
 
         let charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
         if (specialSymbolsCheckbox.checked) {
-            const customSymbols = customSymbolsInput.value.trim();
-
-            if (customSymbols) {
-                // Добавляем только указанные пользователем символы
-                charset += customSymbols;
-            }
-            // Если поле пустое, просто используем базовый набор (ничего не добавляем)
+            charset += customSymbolsInput.value.trim() || '';
         }
 
         let password = '';
@@ -77,6 +75,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         passwordField.value = password;
-        updateCharCounter(); // Обновляем счётчик символов после генерации
+        updateCharCounter();
     });
+
+    // Initialize fields
+    customSymbolsInput.value = defaultSpecialSymbols;
+    syncSliderAndInput(parseInt(passwordLengthInput.value, 10) || 8);
+    updateCharCounter();
 });
