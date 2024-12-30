@@ -2,19 +2,19 @@ import os
 import sys
 import uuid
 import logging
-import redis
+import redis # type: ignore
 import random
 import string
 
 from cryptography.fernet import Fernet
-from flask import abort, Flask, render_template, request, jsonify, make_response
-from redis.exceptions import ConnectionError
+from flask import abort, Flask, render_template, request, jsonify, make_response # type: ignore
+from redis.exceptions import ConnectionError # type: ignore
 from urllib.parse import quote
 from urllib.parse import unquote_plus
 from urllib.parse import urljoin
 from distutils.util import strtobool
 # _ is required to get the Jinja templates translated
-from flask_babel import Babel, _  # noqa: F401
+from flask_babel import Babel, _  # type: ignore # noqa: F401
 
 NO_SSL = bool(strtobool(os.environ.get('NO_SSL', 'False')))
 URL_PREFIX = os.environ.get('URL_PREFIX', None)
@@ -39,7 +39,7 @@ babel = Babel(app, locale_selector=get_locale)
 
 # Initialize Redis
 if os.environ.get('MOCK_REDIS'):
-    from fakeredis import FakeStrictRedis
+    from fakeredis import FakeStrictRedis # type: ignore
 
     redis_client = FakeStrictRedis()
 elif os.environ.get('REDIS_URL'):
