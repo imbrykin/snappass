@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const maxLength = 4096;
     const allowedSpecialSymbols = '!@#$%^&*()-_=+[]{}<>;:,.?/|\\`\'"~';
-    const defaultSpecialSymbols = '!@$%^&*_-#()=+[]{}<>;:,.?';
+    const defaultSpecialSymbols = '!$%^&*_#@()=-+[]{}<>;:,.?';
     const presetSteps = [8, 16, 24, 32, 40, 48, 56, 64];
 
     function updateCharCounter() {

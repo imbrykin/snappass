@@ -228,7 +228,7 @@ def set_base_url(req):
 
 def gen_random_string(length=24):
     rnd = random.SystemRandom()
-    pwd_chars = string.ascii_letters + string.digits + "!@$%^&*_-#()=+[]{}<>;:,.?"  
+    pwd_chars = string.ascii_letters + string.digits + "!$%^&*_#@()=-+[]{}<>;:,.?"  
     return ''.join(rnd.choice(pwd_chars) for _ in range(length))
 
 @app.before_request
@@ -387,7 +387,7 @@ def generate_password():
     length = int(data.get('length', 32))
     if length < 1 or length > 64:
         return jsonify({"error": "Invalid length."}), 400
-    charset = string.ascii_letters + string.digits + "!@$%^&*_-#()=+[]{}<>;:,.?"
+    charset = string.ascii_letters + string.digits + "!$%^&*_#@()=-+[]{}<>;:,.?"
     password = ''.join(random.choices(charset, k=length))
     return jsonify({"password": password})
 
