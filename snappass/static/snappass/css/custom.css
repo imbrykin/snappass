@@ -103,11 +103,11 @@
 
 .expire-time-label {
     font-size: 14px; /* Размер текста */
-    font-weight: bold; /* Жирный текст */
-    color: #555; /* Цвет текста */
+    color: #aaa; /* Цвет текста */
     margin-bottom: 0px; /* Отступ под меткой */
     margin-right: 675px;
     white-space: nowrap;
+    font-weight: normal; /* Убираем жирность */
 }
 
 .expire-time-select {
@@ -136,7 +136,8 @@
 .bold-label {
     margin-top: 1px;
     font-size: 14px; /* Размер текста */
-    font-weight: bold; /* Жирный текст */
+    color: #aaa;
+    font-weight: normal; /* Убираем жирность */
 }
 
 /* Стиль самого чекбокса */
@@ -244,7 +245,19 @@
     flex-shrink: 0; /* Запретить изменение размера */
     height: 70px;
     margin-bottom: 500px;
-         /* Фиксированная высота контейнера */
+   	 /* Фиксированная высота контейнера */
     display: block; /* Убедиться, что Flexbox используется */
     align-items: center; /* Центрирование слайдера по вертикали */
+}
+
+/* Надпись "Length" */
+label[for="password_length"] {
+    color: #aaa; /* Светло-серый цвет */
+    font-weight: normal; /* Убираем жирность */
+}
+
+/* Надпись "Characters remaining" */
+.char-counter {
+    color: #aaa; /* Светло-серый цвет */
+    font-weight: normal; /* Убираем жирность */
 }
