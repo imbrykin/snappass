@@ -385,3 +385,188 @@ label[for="password_length"] {
 .copy-clipboard-btn:active {
     transform: scale(0.95); /* Легкое уменьшение */
 }
+
+
+
+/* Контейнер для переключателя темы */
+.theme-toggle-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: -5px; /* Отступ от текста */
+}
+
+/* Стиль для выравнивания "Share Secret" и переключателя */
+.navbar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Разделяет элементы по краям */
+}
+
+/* Иконка темы */
+.theme-icon {
+    font-size: 20px;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+/* Скрытый чекбокс */
+.theme-toggle {
+    display: none;
+}
+
+/* Слайдер переключателя */
+.theme-toggle-slider {
+    width: 40px;
+    height: 20px;
+    background-color: var(--toggle-bg, #ccc); /* Переменная для фона */
+    border-radius: 20px;
+    top: 2px; /* Небольшое смещение вниз */
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2); /* Лёгкая тень */
+}
+
+.theme-toggle-slider::before {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: #fff;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Тень для ползунка */
+}
+
+/* Активное состояние переключателя */
+.theme-toggle:checked + .theme-toggle-slider {
+    background-color: #337ab7; /* Цвет при активном состоянии */
+}
+
+.theme-toggle:checked + .theme-toggle-slider::before {
+    transform: translateX(20px);
+}
+
+/* При наведении */
+.theme-toggle-slider:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4); /* Акцент на наведении */
+}
+
+/* Темная тема: общий фон и текст */
+body.dark-theme {
+    background-color: #121212; /* Темный фон */
+    color: #e0e0e0; /* Светлый текст */
+}
+
+body.dark-theme .navbar {
+    background-color: #1f1f1f; /* Темная навигационная панель */
+    border-color: #333;
+}
+
+/* Надпись "Set secret" */
+body.dark-theme .page-header h1 {
+    color: #e0e0e0; /* Сделать текст светлым */
+}
+
+/* Поля ввода */
+body.dark-theme .form-control {
+    background-color: #1e1e1e; /* Темный фон полей */
+    color: #e0e0e0; /* Светлый текст */
+    border: 1px solid #333; /* Темная рамка */
+}
+
+/* Поля ввода при фокусе */
+body.dark-theme .form-control:focus {
+    background-color: #2b2b2b; /* Чуть светлее при фокусе */
+    border-color: #337ab7; /* Акцентный цвет рамки */
+    box-shadow: 0 0 8px rgba(51, 122, 183, 0.5); /* Подсветка рамки */
+}
+
+body.dark-theme .form-control::placeholder {
+    color: #888; /* Светло-серый для плейсхолдера */
+}
+
+body.dark-theme .textarea-password {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    border: 1px solid #333;
+}
+
+body.dark-theme .button {
+    background-color: #333;
+    color: #e0e0e0;
+    border: 1px solid #444;
+}
+
+body.dark-theme .button:hover {
+    background-color: #444;
+    color: #fff;
+}
+
+body.dark-theme .theme-toggle-slider {
+    background-color: #444; /* Темный фон переключателя */
+}
+
+body.dark-theme .theme-toggle-slider::before {
+    background-color: #fff; /* Контрастный круг переключателя */
+}
+
+/* Кнопка "Generate URL" */
+body.dark-theme .button-submit {
+    background-color: #1d629e; /* Темно-синий */
+    color: #fff;
+}
+
+body.dark-theme .button-submit:hover {
+    background-color: #337ab7; /* Ярче при наведении */
+}
+
+/* Кнопка "Generate Password" */
+body.dark-theme .button-generate {
+    background-color: #444; /* Темный фон кнопки */
+    color: #e0e0e0; /* Светлый текст */
+}
+
+body.dark-theme .button-generate:hover {
+    background-color: #555; /* Немного светлее при наведении */
+}
+
+/* Поле "Length" */
+body.dark-theme .input-length {
+    background-color: #1e1e1e; /* Темный фон */
+    color: #e0e0e0; /* Светлый текст */
+    border: 1px solid #333; /* Темная рамка */
+}
+
+/* Выпадающий список "URL expire time" */
+body.dark-theme .select-ttl {
+    background-color: #1e1e1e; /* Темный фон */
+    color: #e0e0e0; /* Светлый текст */
+    border: 1px solid #333; /* Темная рамка */
+}
+
+body.dark-theme .select-ttl:focus {
+    background-color: #2b2b2b; /* Чуть светлее при фокусе */
+    border-color: #337ab7; /* Акцентный цвет рамки */
+}
+
+/* Поле "Custom special symbols" */
+body.dark-theme #custom_symbols {
+    background-color: #1e1e1e; /* Темный фон */
+    color: #e0e0e0; /* Светлый текст */
+    border: 1px solid #333; /* Темная рамка */
+}
+
+body.dark-theme #custom_symbols:focus {
+    background-color: #2b2b2b; /* Чуть светлее при фокусе */
+    border-color: #337ab7; /* Акцентный цвет рамки */
+}
+
+/* Полоса в заголовке */
+
+body.dark-theme .page-header {
+    border-bottom: 1px solid #333; /* Темная линия */
+}
