@@ -5,6 +5,16 @@
     border-radius: 5px; /* Скругленные углы */
     text-align: center; /* Центрирование текста */
     cursor: pointer; /* Иконка курсора при наведении */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.button:active{
+    transform: scale(0.95); /* Легкое уменьшение */
 }
 
 /* Кнопка "Submit" */
@@ -47,6 +57,7 @@
     border: 1px solid #ccc; /* Базовый цвет рамки */
     border-radius: 5px; /* Скругленные углы */
     transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Плавный эффект при фокусе */
+    line-height: 1.5;
 }
 
 .textarea-password:focus {
@@ -122,15 +133,75 @@
     transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Плавный эффект */
 }
 
+
 /* Контейнер для чекбокса и метки */
 .checkbox-wrapper {
+    margin-top: 32px;
+    margin-left: 5px;
     display: flex;
-    flex-direction: row; /* Расположить элементы вертикально */
-    align-items: row; /* Выравнивание по левому краю */
-    gap: 10px; /* Расстояние между меткой и чекбоксом */
-    margin-top: 27px; /* Отступ сверху */
-    margin-left: 6px;
+    align-items: center;
+    gap: 10px; /* Расстояние между чекбоксом и меткой */
+    position: relative; /* Относительное позиционирование */
 }
+
+/* Скрытый стандартный чекбокс */
+.checkbox-wrapper input[type="checkbox"] {
+    position: absolute;
+    opacity: 0; /* Полностью скрываем */
+    cursor: pointer; /* Указатель при наведении */
+    width: 20px; /* Размер совпадает с кастомным чекбоксом */
+    height: 20px;
+    z-index: 1; /* Поверх кастомного элемента */
+}
+
+/* Кастомный чекбокс */
+.checkbox-wrapper .checkbox-custom {
+    width: 20px; /* Размер чекбокса */
+    height: 20px;
+    border: 2px solid #ccc; /* Базовая рамка */
+    border-radius: 4px; /* Легкое скругление */
+    background-color: #fff; /* Белый фон */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease; /* Плавные эффекты */
+}
+
+/* Эффект при наведении */
+.checkbox-wrapper .checkbox-custom:hover {
+    transform: scale(1.1); /* Легкое увеличение */
+    background-color: #333; /* Темный фон при наведении */
+    border-color: #555; /* Темная рамка при наведении */
+}
+
+/* Галочка внутри кастомного чекбокса */
+.checkbox-wrapper .checkbox-custom::after {
+    content: "✔"; /* Символ галочки */
+    color: #fff; /* Цвет галочки */
+    font-size: 14px; /* Размер галочки */
+    display: none; /* Скрываем по умолчанию */
+    transition: transform 0.2s ease; /* Плавное появление */
+}
+
+/* Состояние активного чекбокса */
+.checkbox-wrapper input[type="checkbox"]:checked + .checkbox-custom {
+    background-color: #337ab7; /* Синий фон при активации */
+    border-color: #337ab7; /* Синяя рамка */
+}
+
+.checkbox-wrapper input[type="checkbox"]:checked + .checkbox-custom::after {
+    display: block; /* Показываем галочку */
+    transform: scale(1.2); /* Легкое увеличение галочки при активации */
+}
+
+/* Текст метки рядом с чекбоксом */
+.checkbox-wrapper label {
+    font-size: 14px;
+    font-weight: normal;
+    color: #555; /* Цвет текста */
+    cursor: pointer; /* Указатель при наведении */
+}
+
 
 /* Жирный текст метки */
 .bold-label {
@@ -138,23 +209,6 @@
     font-size: 14px; /* Размер текста */
     color: #aaa;
     font-weight: normal; /* Убираем жирность */
-}
-
-/* Стиль самого чекбокса */
-.checkbox {
-    margin-top: 0;
-    gap: 0;
-    width: 25px;
-    height: 20px;
-    cursor: pointer; /* Указатель при наведении */
-}
-
-.checkbox-label {
-    display: flex;
-    flex-direction: row; /* Расположить элементы вертикально */
-    align-items: flex; /* Выравнивание по левому краю */
-    margin-top: 0; /* Отступ сверху */
-    margin-bottom: 0; /* Отступ снизу */
 }
 
 /* Стиль для формы выбора специальных символов */
@@ -260,4 +314,74 @@ label[for="password_length"] {
 .char-counter {
     color: #aaa; /* Светло-серый цвет */
     font-weight: normal; /* Убираем жирность */
+}
+
+/* Кнопка Reveal Secret */
+#revealSecret {
+    background-color: #337ab7;
+    color: #fff;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Плавный переход цвета и размера */
+}
+
+/* Анимация при наведении */
+#revealSecret:hover {
+    background-color: #1d629e;
+    transform: scale(1.05); /* Легкое увеличение */
+}
+
+/* Анимация при нажатии */
+#revealSecret:active {
+    transform: scale(0.95); /* Легкое уменьшение */
+}
+
+/* Скрытый секрет */
+#secretContent {
+    opacity: 0;
+    transform: translateY(-10px); /* Смещение вверх для эффекта */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Плавное появление */
+}
+
+/* Показать секрет */
+#secretContent.visible {
+    opacity: 1;
+    transform: translateY(0); /* Возвращаем в исходное положение */
+}
+
+/* Светло-серый текст для пояснений */
+.light-text {
+    color: #aaa; /* Светло-серый цвет */
+    font-weight: normal; /* Убираем жирность */
+    font-size: 14px; /* Небольшой размер */
+    line-height: 1.6; /* Удобный межстрочный интервал */
+}
+
+/* Увеличенная кнопка Copy to Clipboard */
+.copy-clipboard-btn {
+    margin-left: -20px;
+    width: 115px; /* Аналогичная ширина */
+    height: 32x; /* Аналогичная высота */
+    font-size: 16px; /* Увеличенный размер текста */
+    padding: 6px 9px; /* Внутренние отступы */
+    background-color: #337ab7; /* Синий цвет фона */
+    color: #fff; /* Белый текст */
+    border: none; /* Убираем рамку */
+    border-radius: 5px; /* Скругленные углы */
+    cursor: pointer; /* Указатель при наведении */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Анимация при наведении */
+}
+
+/* Эффект при наведении */
+.copy-clipboard-btn:hover {
+    background-color: #1d629e; /* Темнее при наведении */
+    transform: scale(1.05); /* Легкое увеличение */
+}
+
+/* Эффект при нажатии */
+.copy-clipboard-btn:active {
+    transform: scale(0.95); /* Легкое уменьшение */
 }
