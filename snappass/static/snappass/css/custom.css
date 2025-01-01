@@ -768,4 +768,12 @@ body.dark-theme .page-header {
         transform: scale(0.95); /* Легкое уменьшение кнопки */
     }
 
+    #password-link {
+        resize: none; /* Запрет изменения размера вручную */
+        overflow-wrap: anywhere; /* Перенос текста */
+        white-space: pre-wrap; /* Сохранение пробелов и переносов */
+        height: 80px; /* Высота подстраивается под текст */
+        min-height: 50px; /* Минимальная высота для однородности */
+    }
+
 }
