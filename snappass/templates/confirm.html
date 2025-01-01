@@ -7,9 +7,8 @@
     <p>{{ _('The secret has been temporarily saved. Send the following URL to your intended recipient.') }}</p>
     <div class="row">
       <div class="col-sm-6 margin-bottom-10">
-        <input type="text" class="form-control" id="password-link" value="{{ password_link }}" readonly="readonly">
-      </div>
-
+        <textarea class="form-control" id="password-link" rows="2" readonly>{{ password_link }}</textarea>
+    </div>    
       <div class="col-sm-6">
         <button title="{{ _('Copy to clipboard') }}" type="button" class="btn btn-primary copy-clipboard-btn"
               id="copy-clipboard-btn" data-clipboard-target="#password-link"

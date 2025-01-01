@@ -366,14 +366,41 @@ label[for="password_length"] {
 }
 
 
-/* Кнопка Copy to Clipboard */
-.copy-clipboard-btn {
+/* Кнопка Copy to Clipboard на set-password.html */
+.copy-clipboard-btn-set {
     margin-left: -80px;
     margin-top: -340px;
     width: 55px; /* Ширина кнопки */
     height: 25px; /* Высота кнопки */
     font-size: 12px; /* Размер текста */
     padding: 5px; /* Внутренние отступы */
+    background-color: #337ab7; /* Основной цвет кнопки */
+    color: #fff; /* Цвет текста */
+    border: none; /* Убираем рамку */
+    border-radius: 5px; /* Скругленные углы */
+    cursor: pointer; /* Указатель при наведении */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Плавный переход при наведении */
+    visibility: hidden
+}
+
+/* Эффект при наведении */
+.copy-clipboard-btn-set:hover {
+    background-color: #1d629e; /* Более темный синий при наведении */
+    transform: scale(1.05); /* Легкое увеличение кнопки */
+}
+
+/* Эффект при нажатии */
+.copy-clipboard-btn-set:active {
+    transform: scale(0.95); /* Легкое уменьшение кнопки */
+}
+
+/* Кнопка Copy to Clipboard на confirm-html */
+.copy-clipboard-btn {
+    margin-left: -18px;
+    width: 65px; /* Ширина кнопки */
+    height: 53px; /* Высота кнопки */
+    font-size: 16px; /* Размер текста */
+    padding: 10px; /* Внутренние отступы */
     background-color: #337ab7; /* Основной цвет кнопки */
     color: #fff; /* Цвет текста */
     border: none; /* Убираем рамку */
@@ -585,6 +612,15 @@ body.dark-theme .page-header {
     margin-left: 20px;
 }
 
+#password-link {
+    resize: none; /* Запрет изменения размера вручную */
+    overflow-wrap: anywhere; /* Перенос текста */
+    white-space: pre-wrap; /* Сохранение пробелов и переносов */
+    height: auto; /* Высота подстраивается под текст */
+    min-height: 50px; /* Минимальная высота для однородности */
+}
+
+
 @media (max-width: 768px) {
     .page-header h1 {
         font-size: 28px; /* Уменьшаем размер текста на мобильных */
@@ -677,7 +713,9 @@ body.dark-theme .page-header {
         margin-top: 25px;
     }
 
-    .copy-clipboard-btn {
+    .copy-clipboard-btn-set {
+        visibility: visible; /* Делаем элемент видимым */
+        opacity: 1; /* Полностью показываем элемент */
         margin-left: -80px;
         margin-top: -324px;
         width: 55px; /* Ширина кнопки */
@@ -698,9 +736,36 @@ body.dark-theme .page-header {
         text-align: right; /* Перемещаем кнопку вправо */
     }
 
-    .copy-clipboard-btn {
+    .copy-clipboard-btn-set {
         font-size: 8px; /* Увеличиваем размер текста */
         padding: 8px 24px; /* Делаем кнопку больше */
+    }
+
+    /* Кнопка Copy to Clipboard на confirm.html */
+    .copy-clipboard-btn {
+        margin-top: 10px;
+        margin-left: 0;
+        width: 95px; /* Ширина кнопки */
+        height: 53px; /* Высота кнопки */
+        font-size: 16px; /* Размер текста */
+        padding: 10px; /* Внутренние отступы */
+        background-color: #337ab7; /* Основной цвет кнопки */
+        color: #fff; /* Цвет текста */
+        border: none; /* Убираем рамку */
+        border-radius: 5px; /* Скругленные углы */
+        cursor: pointer; /* Указатель при наведении */
+        transition: background-color 0.3s ease, transform 0.2s ease; /* Плавный переход при наведении */
+    }
+
+    /* Эффект при наведении */
+    .copy-clipboard-btn:hover {
+        background-color: #1d629e; /* Более темный синий при наведении */
+        transform: scale(1.05); /* Легкое увеличение кнопки */
+    }
+
+    /* Эффект при нажатии */
+    .copy-clipboard-btn:active {
+        transform: scale(0.95); /* Легкое уменьшение кнопки */
     }
 
 }
