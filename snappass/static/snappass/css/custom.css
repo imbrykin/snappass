@@ -98,12 +98,17 @@
     gap: 10px; /* Расстояние между элементами в колонке */
 }
 
+
 .page-header h1 {
     font-size: 36px;
     color: #333;
-    text-align: row;
+    text-align: left; /* Убедимся, что текст выравнен слева */
     margin-bottom: 5px;
+    display: inline-block; /* Ограничиваем ширину до контента */
+    max-width: 40%; /* Ограничиваем ширину заголовка или контейнера */
+    margin: 0 auto; /* Центрируем */
 }
+
 
 /* Контейнер для Expire Time */
 .expire-time-container {
@@ -140,7 +145,7 @@
     margin-left: 5px;
     display: flex;
     align-items: center;
-    gap: 10px; /* Расстояние между чекбоксом и меткой */
+    gap: 0; /* Расстояние между чекбоксом и меткой */
     position: relative; /* Относительное позиционирование */
 }
 
@@ -360,30 +365,32 @@ label[for="password_length"] {
     line-height: 1.6; /* Удобный межстрочный интервал */
 }
 
-/* Увеличенная кнопка Copy to Clipboard */
+
+/* Кнопка Copy to Clipboard */
 .copy-clipboard-btn {
-    margin-left: -20px;
-    width: 115px; /* Аналогичная ширина */
-    height: 32x; /* Аналогичная высота */
-    font-size: 16px; /* Увеличенный размер текста */
-    padding: 6px 9px; /* Внутренние отступы */
-    background-color: #337ab7; /* Синий цвет фона */
-    color: #fff; /* Белый текст */
+    margin-left: -80px;
+    margin-top: -340px;
+    width: 55px; /* Ширина кнопки */
+    height: 25px; /* Высота кнопки */
+    font-size: 12px; /* Размер текста */
+    padding: 5px; /* Внутренние отступы */
+    background-color: #337ab7; /* Основной цвет кнопки */
+    color: #fff; /* Цвет текста */
     border: none; /* Убираем рамку */
     border-radius: 5px; /* Скругленные углы */
     cursor: pointer; /* Указатель при наведении */
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Анимация при наведении */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Плавный переход при наведении */
 }
 
 /* Эффект при наведении */
 .copy-clipboard-btn:hover {
-    background-color: #1d629e; /* Темнее при наведении */
-    transform: scale(1.05); /* Легкое увеличение */
+    background-color: #1d629e; /* Более темный синий при наведении */
+    transform: scale(1.05); /* Легкое увеличение кнопки */
 }
 
 /* Эффект при нажатии */
 .copy-clipboard-btn:active {
-    transform: scale(0.95); /* Легкое уменьшение */
+    transform: scale(0.95); /* Легкое уменьшение кнопки */
 }
 
 
@@ -569,4 +576,131 @@ body.dark-theme #custom_symbols:focus {
 
 body.dark-theme .page-header {
     border-bottom: 1px solid #333; /* Темная линия */
+}
+
+/* Общие стили для кнопки Copy to clipboard */
+.copy-container {
+    text-align: left; /* Выравниваем кнопку влево */
+    margin-top: 85px; /* Поднимаем кнопку выше */
+    margin-left: 20px;
+}
+
+@media (max-width: 768px) {
+    .page-header h1 {
+        font-size: 28px; /* Уменьшаем размер текста на мобильных */
+    }
+
+    .page-header {
+        text-align: left; /* Убираем возможное выравнивание по центру */
+        margin: 2px; /* Сброс внешних отступов */
+        padding: 2px; /* Сброс внутренних отступов */
+        margin-left: -1px;
+    }
+
+        /* Поле для ввода пароля (textarea) */
+    .textarea-password {
+        resize: both; /* Разрешаем изменение размера */
+        min-height: 250px; /* Минимальная высота */
+        width: 245px; /* Полная ширина колонки */
+        max-width: 100%; /* Запрещаем превышать контейнер */
+        border: 1px solid #ccc; /* Базовый цвет рамки */
+        border-radius: 5px; /* Скругленные углы */
+        transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Плавный эффект при фокусе */
+        line-height: 1.5;
+    }
+
+    .textarea-password:focus {
+        outline: none; /* Убираем стандартное выделение */
+        border-color: #337ab7; /* Темный синий */
+        box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.2); /* Подсвечивание рамки */
+    }
+
+    .special-symbols-form input {
+        width: 245px;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-top: 70px;
+        margin-left: -300px;
+        gap: 5px;
+    }
+
+    #custom_symbols {
+        height: auto; /* Автоматическая высота */
+        min-height: 10px; /* Минимальная высота (2 строки) */
+        max-height: 100px; /* Ограничение высоты */
+        overflow-y: auto; /* Скролл при переполнении */
+        resize: none; /* Запрещает изменение размера */
+    }
+
+    label[for="custom_symbols"] {
+            display: none; /* Скрыть элемент */
+    }
+
+    #password_slider.slider {
+        width: 245px; /* Ширина для мобильных */
+        height: 22px; /* Высота полосы */
+    }
+
+    #password_slider.slider::-webkit-slider-thumb,
+    #password_slider.slider::-moz-range-thumb,
+    #password_slider.slider::-ms-thumb {
+        width: 78px; /* Размер ползунка */
+        height: 78px;
+    }
+
+    #special_symbols {
+        width: 48px;
+        height: 48px;
+    }
+
+    .checkbox-wrapper .checkbox-custom {
+        margin-top: -7px;
+        width: 34px; /* Размер чекбокса */
+        height: 34px;
+        border: 2px solid #ccc; /* Базовая рамка */
+        border-radius: 4px; /* Легкое скругление */
+        background-color: #fff; /* Белый фон */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease; /* Плавные эффекты */
+    }
+
+    .button-generate {
+        width: 170px;
+        align-self: center;
+        background-color: #6c757d; /* Серый цвет */
+        color: #fff;
+        border: none;
+        margin-left: -5px;
+        margin-top: 25px;
+    }
+
+    .copy-clipboard-btn {
+        margin-left: -80px;
+        margin-top: -324px;
+        width: 55px; /* Ширина кнопки */
+        height: 25px; /* Высота кнопки */
+        font-size: 12px; /* Размер текста */
+        padding: 5px; /* Внутренние отступы */
+        background-color: #337ab7; /* Основной цвет кнопки */
+        color: #fff; /* Цвет текста */
+        border: none; /* Убираем рамку */
+        border-radius: 5px; /* Скругленные углы */
+        cursor: pointer; /* Указатель при наведении */
+        transition: background-color 0.3s ease, transform 0.2s ease; /* Плавный переход при наведении */
+    }
+    
+
+    .copy-container {
+        margin-top: 10px; /* Уменьшаем отступ */
+        text-align: right; /* Перемещаем кнопку вправо */
+    }
+
+    .copy-clipboard-btn {
+        font-size: 8px; /* Увеличиваем размер текста */
+        padding: 8px 24px; /* Делаем кнопку больше */
+    }
+
 }
