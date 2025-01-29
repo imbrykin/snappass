@@ -5,7 +5,11 @@ import logging
 import redis # type: ignore
 import random
 import string
+import smtplib
+import sys
+# import pam
 
+from email.mime.text import MIMEText
 from cryptography.fernet import Fernet
 from flask import abort, Flask, render_template, request, jsonify, make_response # type: ignore
 from redis.exceptions import ConnectionError # type: ignore
@@ -15,11 +19,21 @@ from urllib.parse import urljoin
 from distutils.util import strtobool
 # _ is required to get the Jinja templates translated
 from flask_babel import Babel, _  # type: ignore # noqa: F401
+# from flask_httpauth import HTTPBasicAuth
 
+
+SMTP_SERVER = "your_smtp_here"
+SMTP_FROM = "your_email_here"
+SMTP_SUBJECT = "Snappass Password Notification"
 NO_SSL = bool(strtobool(os.environ.get('NO_SSL', 'False')))
 URL_PREFIX = os.environ.get('URL_PREFIX', None)
 HOST_OVERRIDE = os.environ.get('HOST_OVERRIDE', None)
 TOKEN_SEPARATOR = '~'
+
+#Init PAM
+
+# pam_auth = pam.pam()
+# auth = HTTPBasicAuth()
 
 # Initialize Flask Application
 app = Flask(__name__)
@@ -29,6 +43,35 @@ app.secret_key = os.environ.get('SECRET_KEY', 'Secret Key')
 app.config.update(
     dict(STATIC_URL=os.environ.get('STATIC_URL', 'static')))
 
+
+# Get log level from the OS env, default to INFO only if not set in systemd
+log_level = os.environ.get("LOG_LEVEL", "INFO").upper()
+
+# Validate log level
+valid_log_levels = ["DEBUG", "INFO"]
+if log_level not in valid_log_levels:
+    log_level = "INFO"
+    
+
+def send_email(link, recipient_email):
+    """
+    Отправка email с ссылкой на пароль.
+    """
+    try:
+        body = f"Password link: {link}"
+        msg = MIMEText(body)
+        msg["Subject"] = SMTP_SUBJECT
+        msg["From"] = SMTP_FROM
+        msg["To"] = recipient_email
+
+        logging.info(f"Connecting to SMTP server: {SMTP_SERVER}")
+        with smtplib.SMTP(SMTP_SERVER) as server:
+            server.sendmail(SMTP_FROM, [recipient_email], msg.as_string())
+        logging.info(f"Email sent successfully to {recipient_email}")
+    except Exception as e:
+        logging.error(f"Failed to send email to {recipient_email}: {str(e)}")
+        sys.exit(1)
+        
 
 # Set up Babel
 def get_locale():
@@ -231,9 +274,37 @@ def gen_random_string(length=24):
     pwd_chars = string.ascii_letters + string.digits + "!$%^&*_#@()=-+[]{}<>;:,.?"  
     return ''.join(rnd.choice(pwd_chars) for _ in range(length))
 
+
+
 @app.before_request
 def log_request_info():
-    logging.info(f"Processing request: {request.method} {request.url}")
+    source_ip = request.headers.get('X-Real-IP', 'Not provided')
+    logging.info(f"[{source_ip}] Processing request: {request.method} {request.url}")
+
+    if log_level == "DEBUG":
+        if request.is_json:
+            logging.debug(f"Request JSON body: {request.json}")
+        elif request.form:
+            logging.debug(f"Request form data: {request.form}")
+        else:
+            logging.debug("Request does not contain JSON or form data.")
+
+
+@app.after_request
+def log_response_info(response):
+    if log_level == "DEBUG":
+        if response.content_type == "application/json":
+            logging.debug(f"Response JSON body: {response.status_code} {response.get_json()}")
+            logging.info(f"Response: {response.status_code} for {request.method} {request.url}")
+        else:
+            logging.debug(f"Response content type: {response.status_code} {response.content_type}, skipping detailed content.")
+            logging.info(f"Response: {response.status_code} for {request.method}")
+
+    if response.status_code == 200:
+        content_type = response.content_type or "unknown"
+        logging.info(f"Response content type: {response.status_code} {content_type}")
+        
+    return response
 
 
 @app.route('/', methods=['GET'])
@@ -261,8 +332,20 @@ def handle_password():
         abort(500)
 
 
+# @auth.verify_password
+# def verify_password(username, password):
+#     """
+#     Check login and password through the PAM
+#     """
+#     return pam_auth.authenticate(username, password)
+
+
 @app.route('/api/set_password/', methods=['POST'])
+#@auth.login_required
 def api_handle_password():
+    """
+    Basic AUTH required.
+    """
     password = request.json.get('password')
     ttl = int(request.json.get('ttl', DEFAULT_API_TTL))
     if password and isinstance(ttl, int) and ttl <= MAX_TTL:
@@ -274,8 +357,13 @@ def api_handle_password():
         abort(500)
 
 
+
 @app.route('/api/v2/passwords', methods=['POST'])
+#@auth.login_required
 def api_v2_set_password():
+    """
+    API для установки пароля. Требует Basic Auth.
+    """
     password = request.json.get('password')
     ttl = int(request.json.get('ttl', DEFAULT_API_TTL))
 
@@ -294,7 +382,6 @@ def api_v2_set_password():
         })
 
     if len(invalid_params) > 0:
-        # Return a ProblemDetails expliciting issue with Password and/or TTL
         return as_validation_problem(
             request,
             "set-password-validation-error",
@@ -321,12 +408,17 @@ def api_v2_set_password():
     return jsonify(response_content)
 
 
+# Logger settings
 logging.basicConfig(
     filename='/var/log/snappass.log',
-    level=logging.INFO,
+    level=getattr(logging, log_level, logging.INFO),
     format='%(asctime)s [%(levelname)s] %(message)s'
 )
-logging.info("Starting Snappass")
+
+pid = os.getpid()
+logging.info(f"Log level dynamically set to: {log_level}")
+logging.info(f"Starting Snappass using gunicorn with workers. Worker PID: {pid}")
+
 
 @app.route('/api/v2/passwords/<token>', methods=['HEAD'])
 def api_v2_check_password(token):
@@ -394,8 +486,18 @@ def generate_password():
 
 @app.errorhandler(Exception)
 def handle_exception(e):
-    logging.info(f"Error occurred: Please check that the link is correct.{str(e)}")
-    return "Internal Server Error. Please check that the link is correct and has not been modified during transmission.", 500
+    logging.error(
+        f"Error occurred during request: {request.method} {request.url} - {str(e)}",
+        exc_info=True
+    )
+
+    response = {
+        "error": "Internal Server Error",
+        "message": "An unexpected error occurred. Please contact support.",
+        "details": str(e)
+    }
+
+    return jsonify(response), 500
 
 
 @check_redis_alive
@@ -404,5 +506,13 @@ def main():
             port=os.environ.get('SNAPPASS_PORT', 5000))
 
 
-if __name__ == '__main__':
-    main()
+if __name__ == "__main__":
+    if len(sys.argv) < 3:
+        logging.error("Usage: send_email.py <password_link> <recipient_email>")
+        sys.exit(1)
+
+    password_link = sys.argv[1]
+    recipient_email = sys.argv[2]
+
+    logging.info(f"Processing email notification for link: {password_link}, recipient: {recipient_email}")
+    send_email(password_link, recipient_email)
